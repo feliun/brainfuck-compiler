@@ -17,6 +17,7 @@
 	},
 	"homepage": "https://github.com/feliun/brainfuck-compiler#readme",
 	"devDependencies": {
+		"expect.js": "^0.3.1",
 		"mocha": "^5.2.0"
 	}
 }
