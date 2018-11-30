@@ -1,10 +1,10 @@
 module.exports = target => symbol => {
-	switch (symbol) {
-		case '>':
-			target.shiftRight();
-			break;
+	const dictionary = {
+		'>': target.shiftRight,
+		'<': target.shiftLeft,
+	};
 
-		default:
-			break;
-	}
+	const handler = dictionary[symbol];
+	if (!handler) throw new Error('Non found!');
+	return handler();
 };

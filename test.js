@@ -23,8 +23,18 @@ describe('brainfuck', () => {
 		expect(pointer).to.equal(0);
 	});
 
-	it('returns empty memory when we initialise it', () => {
+	it('returns 1 when we shift to the right', () => {
 		cmd('>');
+		const { cells, pointer } = memory.output();
+
+		compareCells(cells, new Array(SIZE));
+		expect(pointer).to.equal(1);
+	});
+
+	it('shifts to the left', () => {
+		cmd('>');
+		cmd('>');
+		cmd('<');
 		const { cells, pointer } = memory.output();
 
 		compareCells(cells, new Array(SIZE));
