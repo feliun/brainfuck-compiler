@@ -1,7 +1,11 @@
 module.exports = size => {
-	const memory = new Array(size);
+	const cells = new Array(size);
+	const pointer = 0;
 
 	return {
-		output: () => memory,
+		output: () => ({
+			cells,
+			pointer,
+		}),
 	};
 };
