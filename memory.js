@@ -1,5 +1,5 @@
 module.exports = size => {
-	const cells = new Array(size);
+	const cells = new Array(size).fill(0);
 	let pointer = 0;
 
 	return {
@@ -12,6 +12,9 @@ module.exports = size => {
 		},
 		shiftLeft: () => {
 			pointer--;
+		},
+		increase: () => {
+			cells[pointer]++;
 		},
 	};
 };

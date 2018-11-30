@@ -1,4 +1,4 @@
-const SIZE = 100;
+const SIZE = 10;
 const initMemory = require('./memory');
 const initCommand = require('./cmd');
 const expect = require('expect.js');
@@ -11,6 +11,8 @@ describe('brainfuck', () => {
 		expect(JSON.stringify(current)).to.eql(JSON.stringify(expected));
 	};
 
+	const createArray = () => new Array(SIZE).fill(0);
+
 	beforeEach(() => {
 		memory = initMemory(SIZE);
 		cmd = initCommand(memory);
@@ -19,7 +21,7 @@ describe('brainfuck', () => {
 	it('returns empty memory when we initialise it', () => {
 		const { cells, pointer } = memory.output();
 
-		compareCells(cells, new Array(SIZE));
+		compareCells(cells, createArray());
 		expect(pointer).to.equal(0);
 	});
 
@@ -27,7 +29,7 @@ describe('brainfuck', () => {
 		cmd('>');
 		const { cells, pointer } = memory.output();
 
-		compareCells(cells, new Array(SIZE));
+		compareCells(cells, createArray());
 		expect(pointer).to.equal(1);
 	});
 
@@ -37,7 +39,16 @@ describe('brainfuck', () => {
 		cmd('<');
 		const { cells, pointer } = memory.output();
 
-		compareCells(cells, new Array(SIZE));
+		compareCells(cells, createArray());
 		expect(pointer).to.equal(1);
+	});
+
+	it('increase the cell value', () => {
+		cmd('+');
+
+		const { cells, pointer } = memory.output();
+
+		compareCells(cells, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+		expect(pointer).to.equal(0);
 	});
 });

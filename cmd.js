@@ -2,6 +2,7 @@ module.exports = target => symbol => {
 	const dictionary = {
 		'>': target.shiftRight,
 		'<': target.shiftLeft,
+		'+': target.increase,
 	};
 
 	const handler = dictionary[symbol];
