@@ -12,7 +12,10 @@ describe('brainfuck', () => {
 	};
 
 	const invoke = commands => ({
-		run: () => commands.reduce((total, symbol) => total.concat(cmd(symbol)), []),
+		run: () => {
+			memory.digest(commands);
+			return commands.reduce((total, symbol) => total.concat(cmd(symbol)), []);
+		},
 	});
 
 	const createArray = () => new Array(SIZE).fill(0);
@@ -23,18 +26,20 @@ describe('brainfuck', () => {
 	});
 
 	it('returns empty memory when we initialise it', () => {
-		const { cells, pointer } = memory.output();
+		const { cells, pointer, loops } = memory.output();
 
 		compareCells(cells, createArray());
 		expect(pointer).to.equal(0);
+		expect(loops).to.eql(new Array(SIZE).fill(null));
 	});
 
 	it('returns 1 when we shift to the right', () => {
 		const commands = ['>'];
 		invoke(commands).run();
-		const { cells, pointer } = memory.output();
+		const { cells, pointer, loops } = memory.output();
 
 		compareCells(cells, createArray());
+		expect(loops).to.eql(new Array(SIZE).fill(null));
 		expect(pointer).to.equal(1);
 	});
 
