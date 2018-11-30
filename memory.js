@@ -31,8 +31,8 @@ module.exports = size => {
 					loops[index] = counterparty;
 					loops[counterparty] = index;
 				}
-				if (stack.length !== 0) throw new Error('Loops not matching!');
 			});
+			if (stack.length !== 0) throw new Error('Loops not matching!');
 		},
 	};
 };

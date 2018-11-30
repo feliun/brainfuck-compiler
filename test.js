@@ -83,4 +83,13 @@ describe('brainfuck', () => {
 		expect(pointer).to.equal(2);
 		expect(current).to.equal(1);
 	});
+
+	it('parses loop information', () => {
+		const commands = ['[', '+', '>', '[', '+', '+', ']', '<', ']', '.'];
+		const result = invoke(commands).run();
+
+		const { loops } = memory.output();
+
+		compareCells(loops, [8, null, null, 6, null, null, 3, null, 0, null]);
+	});
 });

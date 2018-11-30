@@ -5,6 +5,8 @@ module.exports = target => symbol => {
 		'+': target.increase,
 		'-': target.decrease,
 		'.': target.current,
+		'[': () => {},
+		']': () => {},
 	};
 
 	const handler = dictionary[symbol];
