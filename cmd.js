@@ -4,6 +4,7 @@ module.exports = target => symbol => {
 		'<': target.shiftLeft,
 		'+': target.increase,
 		'-': target.decrease,
+		'.': target.current,
 	};
 
 	const handler = dictionary[symbol];

@@ -68,4 +68,23 @@ describe('brainfuck', () => {
 		compareCells(cells, [2, 0, 1, 0, 0, 0, 0, 0, 0, 0]);
 		expect(pointer).to.equal(2);
 	});
+
+	it('returns current value', () => {
+		cmd('+');
+		cmd('+');
+		cmd('>');
+		cmd('>');
+		cmd('+');
+		cmd('+');
+		cmd('>');
+		cmd('<');
+		cmd('-');
+		const current = cmd('.');
+
+		const { cells, pointer } = memory.output();
+
+		compareCells(cells, [2, 0, 1, 0, 0, 0, 0, 0, 0, 0]);
+		expect(pointer).to.equal(2);
+		expect(current).to.equal(1);
+	});
 });
