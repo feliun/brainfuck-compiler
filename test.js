@@ -11,6 +11,10 @@ describe('brainfuck', () => {
 		expect(JSON.stringify(current)).to.eql(JSON.stringify(expected));
 	};
 
+	const invoke = commands => ({
+		run: () => commands.reduce((total, symbol) => total.concat(cmd(symbol)), []),
+	});
+
 	const createArray = () => new Array(SIZE).fill(0);
 
 	beforeEach(() => {
@@ -26,7 +30,8 @@ describe('brainfuck', () => {
 	});
 
 	it('returns 1 when we shift to the right', () => {
-		cmd('>');
+		const commands = ['>'];
+		invoke(commands).run();
 		const { cells, pointer } = memory.output();
 
 		compareCells(cells, createArray());
@@ -34,9 +39,8 @@ describe('brainfuck', () => {
 	});
 
 	it('shifts to the left', () => {
-		cmd('>');
-		cmd('>');
-		cmd('<');
+		const commands = ['>', '>', '<'];
+		invoke(commands).run();
 		const { cells, pointer } = memory.output();
 
 		compareCells(cells, createArray());
@@ -44,7 +48,8 @@ describe('brainfuck', () => {
 	});
 
 	it('increase the cell value', () => {
-		cmd('+');
+		const commands = ['+'];
+		invoke(commands).run();
 
 		const { cells, pointer } = memory.output();
 
@@ -53,15 +58,8 @@ describe('brainfuck', () => {
 	});
 
 	it('decreases the cell value like a boss', () => {
-		cmd('+');
-		cmd('+');
-		cmd('>');
-		cmd('>');
-		cmd('+');
-		cmd('+');
-		cmd('>');
-		cmd('<');
-		cmd('-');
+		const commands = ['+', '+', '>', '>', '+', '+', '>', '<', '-'];
+		invoke(commands).run();
 
 		const { cells, pointer } = memory.output();
 
@@ -70,16 +68,9 @@ describe('brainfuck', () => {
 	});
 
 	it('returns current value', () => {
-		cmd('+');
-		cmd('+');
-		cmd('>');
-		cmd('>');
-		cmd('+');
-		cmd('+');
-		cmd('>');
-		cmd('<');
-		cmd('-');
-		const current = cmd('.');
+		const commands = ['+', '+', '>', '>', '+', '+', '>', '<', '-', '.'];
+		const result = invoke(commands).run();
+		const [current] = result.slice(-1);
 
 		const { cells, pointer } = memory.output();
 
