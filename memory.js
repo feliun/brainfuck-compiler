@@ -3,25 +3,29 @@ module.exports = size => {
 	let pointer = 0;
 	const loops = new Array(size).fill(null);
 
+	const current = () => cells[pointer];
+	const shiftRight = () => {
+		pointer++;
+	};
+	const shiftLeft = () => {
+		pointer--;
+	};
+
 	return {
 		output: () => ({
 			cells,
 			pointer,
 			loops,
 		}),
-		shiftRight: () => {
-			pointer++;
-		},
-		shiftLeft: () => {
-			pointer--;
-		},
+		shiftRight,
+		shiftLeft,
 		increase: () => {
 			cells[pointer]++;
 		},
 		decrease: () => {
 			cells[pointer]--;
 		},
-		current: () => cells[pointer],
+		current,
 		digest: symbols => {
 			const stack = [];
 			symbols.forEach((symbol, index) => {
@@ -33,6 +37,14 @@ module.exports = size => {
 				}
 			});
 			if (stack.length !== 0) throw new Error('Loops not matching!');
+		},
+		initLoop: () => {
+			if (current() !== 0) return shiftRight();
+			pointer = loops[pointer];
+		},
+		finishLoop: () => {
+			if (current() === 0) return shiftRight();
+			pointer = loops[pointer];
 		},
 	};
 };

@@ -1,3 +1,4 @@
+const debug = require('debug')('bf');
 const SIZE = 10;
 const initMemory = require('./memory');
 const initCommand = require('./cmd');
@@ -14,7 +15,10 @@ describe('brainfuck', () => {
 	const invoke = commands => ({
 		run: () => {
 			memory.digest(commands);
-			return commands.reduce((total, symbol) => total.concat(cmd(symbol)), []);
+			return commands.reduce((total, symbol) => {
+				debug(`Total: ${JSON.stringify(memory.output())}`);
+				return total.concat(cmd(symbol));
+			}, []);
 		},
 	});
 
@@ -91,5 +95,14 @@ describe('brainfuck', () => {
 		const { loops } = memory.output();
 
 		compareCells(loops, [8, null, null, 6, null, null, 3, null, 0, null]);
+	});
+
+	it.skip('jumps', () => {
+		const commands = '++>+++++[<+>-].'.split('');
+		const result = invoke(commands).run();
+
+		// const { loops } = memory.output();
+
+		// compareCells(loops, [8, null, null, 6, null, null, 3, null, 0, null]);
 	});
 });
