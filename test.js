@@ -51,4 +51,21 @@ describe('brainfuck', () => {
 		compareCells(cells, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 		expect(pointer).to.equal(0);
 	});
+
+	it('decreases the cell value like a boss', () => {
+		cmd('+');
+		cmd('+');
+		cmd('>');
+		cmd('>');
+		cmd('+');
+		cmd('+');
+		cmd('>');
+		cmd('<');
+		cmd('-');
+
+		const { cells, pointer } = memory.output();
+
+		compareCells(cells, [2, 0, 1, 0, 0, 0, 0, 0, 0, 0]);
+		expect(pointer).to.equal(2);
+	});
 });

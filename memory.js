@@ -16,5 +16,8 @@ module.exports = size => {
 		increase: () => {
 			cells[pointer]++;
 		},
+		decrease: () => {
+			cells[pointer]--;
+		},
 	};
 };
